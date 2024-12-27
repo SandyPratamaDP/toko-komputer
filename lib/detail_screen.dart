@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tokokomputer/models/laptop.dart';
-import 'package:tokokomputer/tools.dart';
+import 'package:tokokomputer/utilities/favorite_button.dart';
+import 'package:tokokomputer/utilities/read_more.dart';
 
 class DetailScreen extends StatelessWidget {
   const DetailScreen({super.key, required this.laptop});
@@ -13,7 +14,6 @@ class DetailScreen extends StatelessWidget {
       builder: (BuildContext context, BoxConstraints constraints) {
         if (constraints.maxWidth > 800) {
           return DetailWeb(computer: laptop);
-          // return DetailMobile(computer: laptop);
         } else {
           return DetailMobile(computer: laptop);
         }
@@ -22,23 +22,16 @@ class DetailScreen extends StatelessWidget {
   }
 }
 
-class DetailMobile extends StatefulWidget {
+class DetailMobile extends StatelessWidget {
   final Laptop computer;
 
   const DetailMobile({super.key, required this.computer});
 
   @override
-  State<DetailMobile> createState() => _DetailMobile();
-}
-
-class _DetailMobile extends State<DetailMobile> {
-  bool isFavorite = false;
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.computer.name),
+        title: Text(computer.name),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -47,7 +40,7 @@ class _DetailMobile extends State<DetailMobile> {
             Stack(
               children: [
                 Image.asset(
-                  widget.computer.image,
+                  computer.image,
                   fit: BoxFit.cover,
                 ),
                 const Positioned(
@@ -64,7 +57,7 @@ class _DetailMobile extends State<DetailMobile> {
                 children: [
                   const SizedBox(height: 10),
                   Text(
-                    widget.computer.price,
+                    computer.price,
                     style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -72,13 +65,13 @@ class _DetailMobile extends State<DetailMobile> {
                   ),
                   const SizedBox(height: 10),
                   Text(
-                    widget.computer.name,
+                    computer.name,
                     style: const TextStyle(
                         fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 10),
                   ReadMoreText(
-                    text: widget.computer.description,
+                    text: computer.description,
                   )
                 ],
               ),
@@ -138,15 +131,10 @@ class _DetailMobile extends State<DetailMobile> {
   }
 }
 
-class DetailWeb extends StatefulWidget {
+class DetailWeb extends StatelessWidget {
   final Laptop computer;
   const DetailWeb({super.key, required this.computer});
 
-  @override
-  State<DetailWeb> createState() => _DetailWeb();
-}
-
-class _DetailWeb extends State<DetailWeb> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,7 +145,7 @@ class _DetailWeb extends State<DetailWeb> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              widget.computer.name,
+              computer.name,
               style: const TextStyle(
                 // fontFamily: 'Staatliches',
                 fontSize: 32,
@@ -173,7 +161,7 @@ class _DetailWeb extends State<DetailWeb> {
                       ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: Image.network(
-                          widget.computer.image,
+                          computer.image,
                           loadingBuilder: (BuildContext context, Widget child,
                               ImageChunkEvent? loadingProgress) {
                             if (loadingProgress == null) return child;
@@ -206,7 +194,7 @@ class _DetailWeb extends State<DetailWeb> {
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
                           Text(
-                            widget.computer.name,
+                            computer.name,
                             textAlign: TextAlign.left,
                             style: const TextStyle(
                               fontSize: 24.0,
@@ -218,7 +206,7 @@ class _DetailWeb extends State<DetailWeb> {
                           Align(
                             alignment: AlignmentDirectional.centerStart,
                             child: Text(
-                              widget.computer.price,
+                              computer.price,
                               style: const TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
@@ -231,7 +219,7 @@ class _DetailWeb extends State<DetailWeb> {
                           Align(
                             alignment: AlignmentDirectional.centerStart,
                             child: ReadMoreText(
-                              text: widget.computer.description,
+                              text: computer.description,
                             ),
                           ),
                           const SizedBox(
